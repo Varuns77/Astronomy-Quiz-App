@@ -6,12 +6,14 @@ import { DifficultyButton } from "../styled/DifficultyButton";
 import styled from "styled-components";
 import DisplayScores from "./DisplayScores";
 import Instructions from "./Instructions";
+import MusicPlayer from "./MusicPlayer";
 
 function StartGame({toggle, onSelectDifficulty}) {
 
   const [showOptions, setShowOptions] = useState(false);
   const [showScores, setShowScores] = useState(false);
   const [viewInstructions, setViewInstructions] = useState(false);
+  
 
   const handleButtonClick = () => {
     setShowOptions(!showOptions);
@@ -48,14 +50,15 @@ function StartGame({toggle, onSelectDifficulty}) {
               <li onClick={() => handleDifficultySelect('Hard')}>Hard</li>
             </ul>
           </DifficultyButton>
-          {/* <DifficultyButton>Medium</DifficultyButton>
-          <DifficultyButton>Hard</DifficultyButton> */}
         </div>
         )}
         <Button onClick={handleShowScores}>High Scores</Button>
         {showScores && <DisplayScores onClose={()=> setShowScores(false)}/>}
         <Button  onClick={openInstructions}>Instructions</Button>
         {viewInstructions && <Instructions onCancel={() => setViewInstructions(false)} />}
+        <MusicPlayer />
+        
+        
       </div>
     </Container>
   );
@@ -71,6 +74,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   gap: 40px;
+  /* border: 1px solid yellow; */
 
   .quiz-heading p {
     font-weight: 600;
@@ -85,5 +89,4 @@ const Container = styled.div`
     justify-content: center;
     align-items: center;
   }
-
 `;

@@ -14,9 +14,9 @@ export const DifficultyButton = styled.div`
     
     ul li:hover{
         background-color: grey;
-        /* border: 1px solid black; */
         transition: 0.4s ease-in;
         color: white;
+        border-radius:5px;
         cursor: pointer;
     }
 `

@@ -21,7 +21,7 @@ const Timer = ({ difficultLvl }) => {
         setTimerDone(true); // Prevents this from running again on subsequent renders
         setTimeout(() => {
           window.location.reload(); // Reload the page after a short delay
-        }, 1000); // 1000 milliseconds = 1 second
+        }, 1000);
       }
     }, [remainingTime, timerDone]);
   

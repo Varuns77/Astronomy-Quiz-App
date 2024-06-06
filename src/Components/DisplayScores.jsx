@@ -11,47 +11,43 @@ function DisplayScores({onClose}) {
       console.log(keys);
       const userDataArray = keys.map((key) => JSON.parse(localStorage.getItem(key)));
       setSavedUserData(userDataArray);
-      // console.log(savedUserData ? savedUserData : "");
-      // setUserDataList(userDataArray);
-      // const userData = localStorage.getItem('userData');
-
-      // const {name, score, level} = userData;
     }, []);
   
     return (
       <ModalContainer>
-        <div className="close-btn">
-          <div>
-            <button onClick={onClose}><X size={20}/></button>
-          </div>
-        </div>
-        <h1 style={{textAlign: "center"}}>Saved Scores</h1>
-        
-        {savedUserData ? savedUserData && (
-          <div>
-            <div style={{display: "flex", justifyContent: "space-around"}}>
-              <h3>Name</h3>
-              <h3>Difficulty</h3>
-              <h3>Score</h3>
-            </div>
-          {savedUserData.map((userData, index) => (
-          <div key={index} style={{display: "flex", justifyContent: "space-around"}}>
-            <List>{userData.name}</List>
-            <List>{userData.difficultylevel}</List>
-            <List>{userData.userscore}</List>
-          </div>          
-        ))}
-      
-          
-          </div>
-        ): " Play the game to view your scores"}
-      </ModalContainer>
+      <div className='scores'>
+        <h1 style={{ textAlign: "center" }}>Saved Scores</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Difficulty</th>
+              <th>Score</th>
+            </tr>
+          </thead>
+          <tbody>
+            {savedUserData && savedUserData.length > 0 ? (
+              savedUserData.map((score, index) => (
+                <tr key={index}>
+                  <td>{score.name}</td>
+                  <td>{score.difficultylevel}</td>
+                  <td>{score.userscore}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="3" style={{ textAlign: 'center' }}>Play the game to view your scores</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+      <div className="close-btn">
+        <button onClick={onClose}><X size={20} /></button>
+      </div>
+    </ModalContainer>
     );
 }
 
 export default DisplayScores
-
-const List = styled.p`
-  display: inline;
-`;
 

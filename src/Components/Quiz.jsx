@@ -3,51 +3,28 @@ import styled from "styled-components";
 import { Button } from "../styled/Button";
 import { data } from "../assets/Data";
 import {MediumData} from "../assets/MediumData"
+import {HardData} from "../assets/HardData"
 import Timer from "./Timer";
-import DisplayScores from "./DisplayScores";
-import { CountdownCircleTimer } from "react-countdown-circle-timer";
+import MusicPlayer from "./MusicPlayer";
 
-function Quiz({difficulty, home}) {
+function Quiz({difficulty, homeToggle}) {
 
   const gameLevels = {
     Easy: data,
     Medium: MediumData,
-    // Hard: HardData,
+    Hard: HardData,
   };
   
   const Gamelvl = gameLevels[difficulty];
-
-
-
   // console.log(Gamelvl);
 
-  let [index, setIndex] = useState(5)
+  let [index, setIndex] = useState(0)
   const [question, setQuestion] = useState(Gamelvl[index])
   const [lock, setLock] = useState(false)
   const [score, setScore] = useState(0)
   let [result, setResult] = useState(false)
   const [userData, setUserData] = useState([]);
-  const [showScores, setShowScores] = useState(false);
 
-  // const handleNameChange = (event) => {
-  //   const newName = event.target.value;
-  //   const newScore = score;
-  //   const newDifficulty = difficulty;
-
-  //   setUserData((prevUserData) => ({
-  //     ...prevUserData,
-  //     name: newName,
-  //     userscore: newScore,
-  //     difficultylevel: newDifficulty
-  //   }));
-
-  //   const userDataObject = {
-  //     name: newName,
-  //     userscore: newScore,
-  //     difficultylevel: newDifficulty
-  //   };
-  //   localStorage.setItem('userData', JSON.stringify(userDataObject));
-  // };
 
   const handleNameChange = (event) => {
 
@@ -55,25 +32,6 @@ function Quiz({difficulty, home}) {
     const newScore = score;
     const newDifficulty = difficulty;
 
-    // const newUser = {
-    //   name: newName,
-    //   userscore: newScore,
-    //   difficultylevel: newDifficulty
-    // };
-
-  //   setUserData((prevUserData) => ({
-  //     ...prevUserData,
-  //     name: newName,
-  //     userscore: newScore,
-  //     difficultylevel: newDifficulty
-  //   }));
-
-  //   const userDataObject = {
-  //     name: newName,
-  //     userscore: newScore,
-  //     difficultylevel: newDifficulty
-  //   };
-    // localStorage.setItem('userData', JSON.stringify(newUser));
 
     setUserData(prevUserData => ({
       ...prevUserData,
@@ -100,6 +58,7 @@ function Quiz({difficulty, home}) {
 
   //using this array, we will highlight the correct option when we click on the wrong ans
   const opt_arr = [Option1,Option2,Option3, Option4];
+
   // console.log(opt_arr)
 
   // console.log(difficulty);
@@ -116,9 +75,20 @@ function Quiz({difficulty, home}) {
         else if(difficulty === 'Medium'){
           setScore(prev=> prev + 5);
         }
+        else{
+          setScore(prev=> prev + 10);
+        }
       }
       else{
         e.target.classList.add("wrong")
+        if(difficulty === 'Easy')
+          setScore(prev=> prev - 1);
+        else if(difficulty === 'Medium'){
+          setScore(prev=> prev - 2);
+        }
+        else{
+          setScore(prev=> prev - 4);
+        }
         setLock(true)
         opt_arr[question.ans - 1].current.classList.add("correct")
       }
@@ -151,24 +121,7 @@ function Quiz({difficulty, home}) {
     setQuestion(Gamelvl[0])
     setScore(0)
     setResult(false)
-    // setUserData({
-    //   name: '',
-    //   score: 0,
-    //   difficultylevel: difficulty,
-    // });
   }
-
-  const handleShowScores = () => {
-    setShowScores(true); // Set showScores to true when the button is clicked
-  };
-
-// Save user data to localStorage whenever userData changes
-  // useEffect(() => {
-  //   localStorage.setItem('userData', JSON.stringify(userData));
-  // }, [userData]);
-
-
-  
 
   return (
    
@@ -187,10 +140,8 @@ function Quiz({difficulty, home}) {
           <p>Difficulty Level: <b>{difficulty}</b></p>
           <p>You Scored: <b>{score}</b></p>
           <Button className="reset-btn" onClick={handleSaveScore}>Save your score</Button>
-          
-          {/* <Button className="reset-btn" onClick={handleShowScores}>Show Saved Scores</Button>
-          {showScores && <DisplayScores />} */}
           <Button className="reset-btn" onClick={reset}>Reset</Button>
+          <Button className="reset-btn" onClick={homeToggle}>Home</Button>
         </div>
         
         </> : <>
@@ -217,6 +168,7 @@ function Quiz({difficulty, home}) {
         </ul>
         <Button className="next-btn" onClick={next}>Next</Button>
       </div>  </>}      
+      <MusicPlayer />
     </GamePlayContainer>
    
   );
@@ -224,30 +176,19 @@ function Quiz({difficulty, home}) {
 
 export default Quiz;
 
-// const Main = styled.div`
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   color: red;
-//   width: 100vw;
-// `;
-
 const GamePlayContainer = styled.div`
   color: black;
   font-size: 1.5em;
+  width: 800px;
   background-color: rgba(255, 255, 255, 0.932);
   min-height: 640px;
-  max-width: 800px;
+  min-width: 550px;
   /* border: 1px solid black; */
   border-radius: 15px;
   margin: 0 auto;
-  /* display: flex;
-  align-items: center;
-  justify-content: center; */
   /* word-wrap:break-word; */
   margin-top: 60px;
 
-  
 
   .top-section {
     display: flex;
@@ -257,7 +198,6 @@ const GamePlayContainer = styled.div`
   .ques-section {
     display: flex;
     flex-direction: column;
-    /* border: 1px solid black; */
     align-items: center;
   }
 
@@ -284,7 +224,6 @@ const GamePlayContainer = styled.div`
 
   .ques-ans-section ul li{
     display: flex;
-    /* flex-direction: column; */
     align-items: center;
     max-width: 70%;
     height: 50px;
@@ -294,9 +233,7 @@ const GamePlayContainer = styled.div`
     font-size: 20px;
     cursor: pointer;
     margin: 0 auto;
-    margin-bottom: 20px;
-    /* margin-left: 20px; */
-
+    margin-bottom: 20px
   }
 
   .next-btn{
@@ -304,7 +241,6 @@ const GamePlayContainer = styled.div`
     color: white;
     background-color: black;
     margin: auto;
-    /* border: 1px solid black; */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -350,9 +286,4 @@ const GamePlayContainer = styled.div`
   padding-top: 15px;
   }
 
-  /* .timer {
-  display: flex;
-  flex-direction: column;
-  align-items: center; 
-}*/
 `;

@@ -55,4 +55,30 @@ export const MediumData = [{
     ans: 3
 },
 
+{
+    ques: "What type of celestial object is a quasar?",
+    option1: "A neutron star",
+    option2: "A white dwarf",
+    option3: "A distant, highly luminous active galactic nucleus",
+    option4: "A brown dwarf",
+    ans: 3
+},
+
+{
+    ques: "What is the name of the largest moon of Saturn?",
+    option1: "Europa",
+    option2: "Titan",
+    option3: "Ganymede",
+    option4: "Enceladus",
+    ans: 2
+},
+
+{
+    ques: "Which galaxy is on a collision course with the Milky Way?",
+    option1: "Triangulum Galaxy",
+    option2: "Sombrero Galaxy",
+    option3: "Large Magellanic Cloud",
+    option4: "Andromeda Galaxy",
+    ans: 4
+}
 ]

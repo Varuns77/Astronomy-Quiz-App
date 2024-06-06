@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import './App.css'
+// import './App.css'
 import Quiz from './Components/Quiz'
 import StartGame from './Components/StartGame'
 
@@ -16,9 +16,13 @@ function App() {
     setSelectedDifficulty(difficulty);
   };
 
+  const homeFn = () => {
+    setisGameStarted(false)
+  }
+
   return (
     <>
-    {isGameStarted ? <Quiz difficulty={selectedDifficulty}/> : <StartGame toggle = {toggleGamePlay} onSelectDifficulty={handleSelectDifficulty}/>}
+    {isGameStarted ? <Quiz difficulty={selectedDifficulty} homeToggle = {homeFn}/> : <StartGame toggle = {toggleGamePlay} onSelectDifficulty={handleSelectDifficulty}/>}
       
     </>
   )
