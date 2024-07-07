@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { Button } from "../styled/Button";
+// import { Button } from "../styled/Button";
 import { data } from "../assets/Data";
 import {MediumData} from "../assets/MediumData"
 import {HardData} from "../assets/HardData"
@@ -147,7 +147,7 @@ function Quiz({difficulty, homeToggle}) {
         </> : <>
         
       <Timer difficultLvl={difficulty}/>
-        <div className="top-section">
+      <div className="top-section">
         <div className="ques-section">
           <p>Questions</p>
           <p>{index+1}/{Gamelvl.length}</p>

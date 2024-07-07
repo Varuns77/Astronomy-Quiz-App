@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 // import "./StartGame.css";
-import { Button } from "../styled/Button";
+// import { Button } from "../styled/Button";
 import { DifficultyButton } from "../styled/DifficultyButton";
 
 import styled from "styled-components";
 import DisplayScores from "./DisplayScores";
 import Instructions from "./Instructions";
 import MusicPlayer from "./MusicPlayer";
+import CustomButtonComponent from "./CustomButtonComponent";
 
 function StartGame({toggle, onSelectDifficulty}) {
 
@@ -39,8 +40,8 @@ function StartGame({toggle, onSelectDifficulty}) {
         <p>Astronomy Quiz</p>
       </div>
       <div className="start-btn">
-        <Button onClick={toggle}>Start Game</Button>
-        <Button onClick={handleButtonClick}>Difficult Level</Button>
+        <CustomButtonComponent onClick={toggle}>Start Game</CustomButtonComponent>
+        <CustomButtonComponent onClick={handleButtonClick}>Difficult Level</CustomButtonComponent>
         {showOptions && (
         <div>
           <DifficultyButton>
@@ -52,9 +53,9 @@ function StartGame({toggle, onSelectDifficulty}) {
           </DifficultyButton>
         </div>
         )}
-        <Button onClick={handleShowScores}>High Scores</Button>
+        <CustomButtonComponent onClick={handleShowScores}>High Scores</CustomButtonComponent>
         {showScores && <DisplayScores onClose={()=> setShowScores(false)}/>}
-        <Button  onClick={openInstructions}>Instructions</Button>
+        <CustomButtonComponent  onClick={openInstructions}>Instructions</CustomButtonComponent>
         {viewInstructions && <Instructions onCancel={() => setViewInstructions(false)} />}
         <MusicPlayer />
         
