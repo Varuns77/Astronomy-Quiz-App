@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { data } from "../assets/Data";
 import { MediumData } from "../assets/MediumData";
 import { HardData } from "../assets/HardData";
@@ -6,15 +6,19 @@ import Timer from "./Timer";
 import MusicPlayer from "./MusicPlayer";
 import { TextField, Button, Container, Typography, List, ListItem, Divider, Box, ListItemButton } from '@mui/material';
 import { styled } from '@mui/system';
+import { GameContext } from '../Context/GameContext';
 
-function Qui({ difficulty, homeToggle }) {
+function Qui() {
+
+  const { selectedDifficulty, homeFn } = useContext(GameContext);
+
   const gameLevels = {
     Easy: data,
     Medium: MediumData,
     Hard: HardData,
   };
 
-  const Gamelvl = gameLevels[difficulty];
+  const Gamelvl = gameLevels[selectedDifficulty];
 
   let [index, setIndex] = useState(9);
   const [question, setQuestion] = useState(Gamelvl[index]);
@@ -26,7 +30,7 @@ function Qui({ difficulty, homeToggle }) {
   const handleNameChange = (event) => {
     const newName = event.target.value;
     const newScore = score;
-    const newDifficulty = difficulty;
+    const newDifficulty = selectedDifficulty;
 
     setUserData({
       name: newName,
@@ -53,13 +57,13 @@ function Qui({ difficulty, homeToggle }) {
       if (question.ans === ans) {
         e.target.classList.add("correct");
         setLock(true);
-        if (difficulty === 'Easy') setScore((prev) => prev + 3);
-        else if (difficulty === 'Medium') setScore((prev) => prev + 5);
+        if (selectedDifficulty === 'Easy') setScore((prev) => prev + 3);
+        else if (selectedDifficulty === 'Medium') setScore((prev) => prev + 5);
         else setScore((prev) => prev + 10);
       } else {
         e.target.classList.add("wrong");
-        if (difficulty === 'Easy') setScore((prev) => prev - 1);
-        else if (difficulty === 'Medium') setScore((prev) => prev - 2);
+        if (selectedDifficulty === 'Easy') setScore((prev) => prev - 1);
+        else if (selectedDifficulty === 'Medium') setScore((prev) => prev - 2);
         else setScore((prev) => prev - 4);
         setLock(true);
         opt_arr[question.ans - 1].current.classList.add("correct");
@@ -108,7 +112,7 @@ function Qui({ difficulty, homeToggle }) {
           />
           
           <Typography variant="body1">
-            Difficulty Level: <strong style={{color: 'lightgrey'}}>{difficulty}</strong>
+            Difficulty Level: <strong style={{color: 'lightgrey'}}>{selectedDifficulty}</strong>
           </Typography>
           <Typography variant="body1">
             You Scored: <strong>{score}</strong>
@@ -119,14 +123,14 @@ function Qui({ difficulty, homeToggle }) {
           <Button variant="contained" color="secondary" onClick={reset} sx={{ mt: 2, fontFamily: 'Bungee, cursive', fontWeight: '900' }}>
             PLAY AGAIN
           </Button>
-          <CustomBtn variant="contained" onClick={homeToggle} sx={{ mt: 2 }}>
+          <CustomBtn variant="contained" onClick={homeFn} sx={{ mt: 2 }}>
             Home
           </CustomBtn>
         </ResultSection>
       ) : (
         <>
           <TimerWrapper>
-            <Timer difficultLvl={difficulty} />
+            <Timer difficultLvl={selectedDifficulty} />
           </TimerWrapper>
           <TopSection> 
             <QuesSection>

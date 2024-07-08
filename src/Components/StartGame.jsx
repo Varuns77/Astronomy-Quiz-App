@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 // import "./StartGame.css";
 // import { Button } from "../styled/Button";
 import { DifficultyButton } from "../styled/DifficultyButton";
@@ -8,8 +8,12 @@ import DisplayScores from "./DisplayScores";
 import Instructions from "./Instructions";
 import MusicPlayer from "./MusicPlayer";
 import CustomButtonComponent from "./CustomButtonComponent";
+import { GameContext } from '../Context/GameContext';
 
-function StartGame({toggle, onSelectDifficulty}) {
+function StartGame({}) {
+  
+  const { toggleGamePlay, handleSelectDifficulty } = useContext(GameContext);
+
 
   const [showOptions, setShowOptions] = useState(false);
   const [showScores, setShowScores] = useState(false);
@@ -21,10 +25,15 @@ function StartGame({toggle, onSelectDifficulty}) {
   };
 
   const handleDifficultySelect = (difficulty) => {
-    onSelectDifficulty(difficulty);
+    handleSelectDifficulty(difficulty);
     // console.log(difficulty);
     setShowOptions(false); // Close difficulty options after selection
   };
+  // const handleDifficultySelect = (difficulty) => {
+  //   onSelectDifficulty(difficulty);
+  //   // console.log(difficulty);
+  //   setShowOptions(false); // Close difficulty options after selection
+  // };
 
   const handleShowScores = () => {
     setShowScores(true); // Set showScores to true when the button is clicked
@@ -40,7 +49,7 @@ function StartGame({toggle, onSelectDifficulty}) {
         <p>Astronomy Quiz</p>
       </div>
       <div className="start-btn">
-        <CustomButtonComponent onClick={toggle}>Start Game</CustomButtonComponent>
+        <CustomButtonComponent onClick={toggleGamePlay}>Start Game</CustomButtonComponent>
         <CustomButtonComponent onClick={handleButtonClick}>Difficult Level</CustomButtonComponent>
         {showOptions && (
         <div>

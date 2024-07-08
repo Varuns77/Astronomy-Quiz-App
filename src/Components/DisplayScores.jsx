@@ -29,41 +29,21 @@ function DisplayScores({ onClose }) {
 
   return (
     <Modal open onClose={onClose}>
-      <Box
+      <ScoreContainer
         sx={{
-          width: 650,
-          height: 370,
-          minWidth: 350,
-          minHeight: 280,
-          backgroundColor: "white",
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          borderRadius: 2,
-          p: 2,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
+          p: 2
         }}
       >
-        <Box
-          className="scores"
-          sx={{
-            display: "flex",
-            flexDirection: 'column',
-            alignItems: 'center',  
-            fontFamily: 'Bungee, cursive'    
-          }}
-        >
-          <Box sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%'}}>
+        
+          <ScoreHeader sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%'}}>
             <Typography sx={{flex: '2', marginLeft: '75px'}} variant="h5" component="h1" textAlign="center">
               Saved Scores
             </Typography>
             <IconButton onClick={onClose} size="large">
               <CloseIcon fontSize="inherit" />
             </IconButton>
-          </Box>
+          </ScoreHeader>
+          
           <ScoreTable>
           <TableContainer
             component={Paper}
@@ -99,8 +79,8 @@ function DisplayScores({ onClose }) {
             </Table>
           </TableContainer>
           </ScoreTable>
-        </Box>
-      </Box>
+        </ScoreContainer>
+      
     </Modal>
   );
 }
@@ -109,11 +89,33 @@ export default DisplayScores;
 
 
 const ScoreTable = styled(Box)`
-width: 95%;
-font-family: "Bungee, cursive";
-max-height: 37.5%;
+width: 100%;
 overflow-y: auto;
 scrollbar-width: thin;
 
 scrollbar-color: "grey white" /* scroll thumb and track */;
+`;
+
+const ScoreHeader = styled(Box)`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const ScoreContainer = styled(Box)`
+
+  width: 650px;
+  height: 350px;
+  min-width: 280px;
+  background-color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 8px;
+  /* padding: ; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
