@@ -13,7 +13,7 @@ const CustomButton = styled(Button)(({ theme }) => ({
   fontSize: theme.typography.button.fontSize,
   cursor: 'pointer',
   border: '1px solid transparent',  
-  transition: '0.4s ease-in',
+  transition: '0.2s ease-in',
   '&:hover': {
     backgroundColor: theme.palette.common.main,
     color: theme.palette.primary.main,

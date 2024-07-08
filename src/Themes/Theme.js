@@ -31,6 +31,11 @@ const theme = createTheme({
         fontFamily: "'Bungee', cursive, sans-serif",
     },
 
+    h2:{
+      fontFamily: "'Bungee', cursive, sans-serif",
+      fontSize: '3.5rem',
+    },
+
     table: {
         fontFamily: "'Bungee', cursive, sans-serif",
     },
@@ -38,7 +43,14 @@ const theme = createTheme({
     h5:{
       fontSize: '26px',
       fontFamily: "'Bungee', cursive, sans-serif",
+      color: grey[700]
   },
+
+    body2: {
+      fontFamily: "'Bungee', cursive, sans-serif",
+      fontSize: '16px',
+      color: grey[500]
+    }
   },
 
   components: {
@@ -48,7 +60,19 @@ const theme = createTheme({
           fontFamily: "'Bungee', cursive, sans-serif",
           fontSize: "16px",
         },
+        head: {
+          backgroundColor: grey[700],
+          color: "white",
+        }
       },
+    },
+    MuiTableHead: {
+      styleOverrides: {
+        root: {
+          // backgroundColor: "#176B87",
+          // color: "red",
+        }
+      }
     },
   },
 });

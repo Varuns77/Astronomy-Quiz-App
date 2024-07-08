@@ -35,7 +35,7 @@ function DisplayScores({ onClose }) {
         }}
       >
         
-          <ScoreHeader sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%'}}>
+          <ScoreHeader>
             <Typography sx={{flex: '2', marginLeft: '75px'}} variant="h5" component="h1" textAlign="center">
               Saved Scores
             </Typography>
@@ -92,7 +92,7 @@ const ScoreTable = styled(Box)`
 width: 100%;
 overflow-y: auto;
 scrollbar-width: thin;
-
+overflow-x: hidden;
 scrollbar-color: "grey white" /* scroll thumb and track */;
 `;
 
@@ -105,9 +105,8 @@ const ScoreHeader = styled(Box)`
 
 const ScoreContainer = styled(Box)`
 
-  width: 650px;
-  height: 350px;
-  min-width: 280px;
+  height: 55%;
+  min-width: 45%;
   background-color: white;
   position: absolute;
   top: 50%;

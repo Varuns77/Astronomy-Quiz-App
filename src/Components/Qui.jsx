@@ -4,9 +4,10 @@ import { MediumData } from "../assets/MediumData";
 import { HardData } from "../assets/HardData";
 import Timer from "./Timer";
 import MusicPlayer from "./MusicPlayer";
-import { TextField, Button, Container, Typography, List, ListItem, Divider, Box, ListItemButton } from '@mui/material';
+import { TextField, Button, Container, Typography, List, ListItem, Divider, Box, ListItemButton, Stack } from '@mui/material';
 import { styled } from '@mui/system';
 import { GameContext } from '../Context/GameContext';
+import { grey } from '@mui/material/colors';
 
 function Qui() {
 
@@ -99,7 +100,7 @@ function Qui() {
     <Container maxWidth="md" sx={{ bgcolor: 'background.paper', borderRadius: 2, p: 3, mt: 6}}>
       {result ? (
         <ResultSection>
-          <Typography variant="h1">
+          <Typography variant="h1" sx={{marginTop: "10px", textAlign: "center"}}>
             GAME OVER
           </Typography>
           <Typography variant="h6">Enter your name:</Typography>
@@ -112,19 +113,21 @@ function Qui() {
           />
           
           <Typography variant="body1">
-            Difficulty Level: <strong style={{color: 'lightgrey'}}>{selectedDifficulty}</strong>
+            Difficulty Level: <strong style={{color: grey[500]}}>{selectedDifficulty}</strong>
           </Typography>
           <Typography variant="body1">
-            You Scored: <strong>{score}</strong>
+            You Scored: <strong style={{color: grey[500]}}>{score}</strong>
           </Typography>
-          <CustomBtn variant="contained" color="primary" onClick={handleSaveScore} sx={{ mt: 2 }}>
-            Save your score
-          </CustomBtn>
-          <Button variant="contained" color="secondary" onClick={reset} sx={{ mt: 2, fontFamily: 'Bungee, cursive', fontWeight: '900' }}>
-            PLAY AGAIN
-          </Button>
+          <Stack spacing={2} direction="row" m={2}>
+            <CustomBtn variant="contained" color="primary" onClick={handleSaveScore} sx={{ mt: 2 }}>
+              Save score
+            </CustomBtn>
+            <CustomBtn variant="contained" color="secondary" onClick={reset} sx={{ mt: 2, fontFamily: 'Bungee, cursive', fontWeight: '900' }}>
+              PLAY AGAIN
+            </CustomBtn>
+          </Stack>
           <CustomBtn variant="contained" onClick={homeFn} sx={{ mt: 2 }}>
-            Home
+            QUIt
           </CustomBtn>
         </ResultSection>
       ) : (

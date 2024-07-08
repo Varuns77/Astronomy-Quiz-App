@@ -9,28 +9,10 @@ import { GameProvider } from './Context/GameContext';
 import { GameContext } from '../src/Context/GameContext';
 
 function App() {
-  // const [isGameStarted, setisGameStarted] = useState(false);
-  // const [selectedDifficulty, setSelectedDifficulty] = useState(null);
-
-  // const toggleGamePlay = () => {
-  //   if(selectedDifficulty != undefined)
-  //     setisGameStarted((prev) => !prev);
-  // }
-
-  // const handleSelectDifficulty = (difficulty) => {
-  //   setSelectedDifficulty(difficulty);
-  // };
-
-  // const homeFn = () => {
-  //   setisGameStarted(false)
-  //   setSelectedDifficulty(null)
-  // }
-
   return (
     <>
     <ThemeProvider theme={theme}>
       <GameProvider>
-    {/* {isGameStarted ? <Qui difficulty={selectedDifficulty} homeToggle = {homeFn}/> : <StartGame toggle = {toggleGamePlay} onSelectDifficulty={handleSelectDifficulty}/>} */}
         <GameComponent />
       </GameProvider>
     </ThemeProvider>

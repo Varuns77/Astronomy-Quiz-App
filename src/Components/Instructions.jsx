@@ -12,40 +12,39 @@ import { Close as CloseIcon } from '@mui/icons-material';
 function Instructions({ onCancel }) {
   return (
     <Dialog onClose={onCancel} open={true} maxWidth="md">
-      <Box p={2}>
+      <Box p={2} sx={{marginLeft: "10px"}}>
         <InstructionHeader>
-          <DialogTitle>Instructions</DialogTitle>
+        <Typography variant="h5">Instructions</Typography>
           <IconButton onClick={onCancel}>
             <CloseIcon />
           </IconButton>
         </InstructionHeader>
         <InstructionContent>
           <Typography variant="h6">Gameplay:</Typography>
-          <Typography paragraph>
+          <Typography variant="body2">
             First pick your difficulty level. <br />
             Answer questions within the set time. <br />
             Aim to score as high as possible.
           </Typography>
-          {/* <Typography variant="body1"><b>Choose Difficulty:</b> Start by selecting Easy, Medium, or Hard mode.</Typography> */}
           <Typography variant="h6">Time Limits (entire game):</Typography>
-          <Typography paragraph>
+          <Typography variant="body2">
             Easy: 30 seconds<br />
             Medium: 45 seconds<br />
             Hard: 60 seconds
           </Typography>
           <Typography variant="h6">Scoring:</Typography>
-          <Typography paragraph>
+          <Typography variant="body2">
             Score 3 points for every correct answer.<br />
             Score 5 points for every correct answer.<br />
             Score 10 points for every correct answer.
           </Typography>
           <Typography variant="h6">Ending the Game:</Typography>
-          <Typography paragraph>
-            If the timer runs out: Game ends immediately.<br />
-            Complete all questions: Game ends, revealing your final score.
+          <Typography variant="body2">
+            When the timer runs out, the game finishes immediately.<br />
+            When you finish every question, the game ends and your final score is displayed.
           </Typography>
           <Typography variant="h6">Music:</Typography>
-          <Typography paragraph>
+          <Typography variant="body2">
             Double tap to play the music.
           </Typography>
         </InstructionContent>
