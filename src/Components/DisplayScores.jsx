@@ -20,7 +20,7 @@ function DisplayScores({ onClose }) {
 
   useEffect(() => {
     const keys = Object.keys(localStorage);
-    console.log(keys);
+    // console.log(keys);
     const userDataArray = keys.map((key) =>
       JSON.parse(localStorage.getItem(key))
     );

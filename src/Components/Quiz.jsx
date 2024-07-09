@@ -21,12 +21,17 @@ function Quiz() {
 
   const Gamelvl = gameLevels[selectedDifficulty];
 
-  let [index, setIndex] = useState(0);
+  let [index, setIndex] = useState(9);
   const [question, setQuestion] = useState(Gamelvl[index]);
   const [lock, setLock] = useState(false);
   const [score, setScore] = useState(0);
   const [result, setResult] = useState(false);
-  const [userData, setUserData] = useState({});
+  const [userData, setUserData] = useState({
+    name: '',
+    userscore: 0,
+    difficultylevel: '',
+  });
+
 
   const handleNameChange = (event) => {
     const newName = event.target.value;
@@ -38,17 +43,20 @@ function Quiz() {
       userscore: newScore,
       difficultylevel: newDifficulty,
     });
+
   };
 
   const handleSaveScore = (event) => {
-    if(event.target.value == ""){
-      alert('Please enter your name');
+    event.preventDefault(); // Prevent default form submission if applicable
+
+    if (userData.name.trim()) {
+        const randomId = Math.random().toString(36).substring(2, 10);
+        localStorage.setItem(randomId, JSON.stringify(userData));
+        alert('Score saved successfully!');
+    } else {
+        alert('Please enter a name before saving the score.');
     }
-    else{
-      const randomId = Math.random().toString(36).substring(2, 10);
-      localStorage.setItem(randomId, JSON.stringify(userData));
-      alert('Score saved successfully!');
-    }
+    
   };
 
   let Option1 = useRef(null);
@@ -132,7 +140,7 @@ function Quiz() {
             </CustomBtn>
           </Stack>
           <CustomBtn variant="contained" onClick={homeFn} sx={{ mt: 2 }}>
-            QUIt
+            QUIT
           </CustomBtn>
         </ResultSection>
       ) : (
