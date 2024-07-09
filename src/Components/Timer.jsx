@@ -1,17 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import { Box, styled } from '@mui/material';
+import React, { useState, useEffect, useContext } from 'react';
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
+import { GameContext } from '../Context/GameContext';
 
-const Timer = ({ difficultLvl }) => {
+const Timer = () => {
+
+  const { selectedDifficulty } = useContext(GameContext);
 
   const gameTime = {
-    Easy: 30,
-    Medium: 45,
-    Hard: 60,
+    Easy: 50,
+    Medium: 70,
+    Hard: 90,
   };
 
-  const LvlTime = gameTime[difficultLvl]
-
-  console.log(difficultLvl);
+  const LvlTime = gameTime[selectedDifficulty]
 
   const renderTime = ({ remainingTime }) => {
     const [timerDone, setTimerDone] = useState(false);
@@ -26,33 +28,32 @@ const Timer = ({ difficultLvl }) => {
     }, [remainingTime, timerDone]);
   
     if (timerDone) {
-      return <div className="timer" style={{ fontSize: "10px" }}>Restarting</div>;
+      return <strong>0</strong>;
     }
   
     return (
-      <div className="timer">
-        <div className="value"><p>{remainingTime}</p></div>
-      </div>
+      <Box className="timer">
+        <Box className="value">
+          <strong>{remainingTime}</strong></Box>
+      </Box>
     );
   ;
   };
 
   return (
 
-  <div className="timer-wrapper">
+  <Box>
         <CountdownCircleTimer
           isPlaying
           duration={LvlTime}
-          colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
-          colorsTime={[60, 40, 20, 0]}
-          onComplete={() => ({ shouldRepeat: true, delay: 1 })}
+          colors="#9e9e9e"
+          onComplete={() => ({ shouldRepeat: true})}
           size={80}
         >
           {renderTime}
         </CountdownCircleTimer>
-    </div>
+    </Box>
   )
 };
-
 
 export default Timer;

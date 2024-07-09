@@ -21,7 +21,7 @@ function Qui() {
 
   const Gamelvl = gameLevels[selectedDifficulty];
 
-  let [index, setIndex] = useState(9);
+  let [index, setIndex] = useState(0);
   const [question, setQuestion] = useState(Gamelvl[index]);
   const [lock, setLock] = useState(false);
   const [score, setScore] = useState(0);
@@ -97,7 +97,7 @@ function Qui() {
   };
 
   return (
-    <Container maxWidth="md" sx={{ bgcolor: 'background.paper', borderRadius: 2, p: 3, mt: 6}}>
+    <Container maxWidth="md" sx={{ bgcolor: 'background.paper', borderRadius: 2, p: 3, mt: 7}}>
       {result ? (
         <ResultSection>
           <Typography variant="h1" sx={{marginTop: "10px", textAlign: "center"}}>
@@ -138,11 +138,11 @@ function Qui() {
           <TopSection> 
             <QuesSection>
               <Typography variant="body1">Questions</Typography>
-              <Typography variant="body1">{index + 1}/{Gamelvl.length}</Typography>
+              <Typography variant="body1" sx={{color: grey[500]}}>{index + 1}/{Gamelvl.length}</Typography>
             </QuesSection>
             <ScoreSection>
               <Typography variant="body1">Score</Typography>
-              <Typography variant="body1">{score}</Typography>
+              <Typography variant="body1" sx={{color: grey[500]}}>{score}</Typography>
             </ScoreSection>
           </TopSection>
           <QuesAnsSection>
@@ -259,7 +259,7 @@ const QuesAnsSection = styled(Box)`
 const TimerWrapper = styled(Box)`
   display: flex;
   justify-content: center;
-  padding-top: 15px;
+  padding-top: 12px;
 `;
 
 const CustomBtn = styled(Button)`

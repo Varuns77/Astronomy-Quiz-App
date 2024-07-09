@@ -15,15 +15,14 @@ const DifficultyButton = styled(Box)(({ theme }) => ({
 
 export const StyledList = styled(List)({
   listStyleType: 'none',
-  padding: 0,
-  textAlign: 'center',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center', // Center items horizontally
 });
 
 
 export const StyledListItem = styled(ListItem)({
+
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center', 
 
   '&:hover': {
       backgroundColor: 'grey',
@@ -31,7 +30,6 @@ export const StyledListItem = styled(ListItem)({
       color: 'white',
       borderRadius: '5px',
       cursor: 'pointer',
-    
   },
 });
 

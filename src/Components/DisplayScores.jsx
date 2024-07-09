@@ -47,7 +47,7 @@ function DisplayScores({ onClose }) {
           <ScoreTable>
           <TableContainer
             component={Paper}
-            sx={{ width: "100%", margin: "10px 0"}}
+            sx={{ width: "100%"}}
           >
             <Table>
               <TableHead>
@@ -90,6 +90,7 @@ export default DisplayScores;
 
 const ScoreTable = styled(Box)`
 width: 100%;
+
 overflow-y: auto;
 scrollbar-width: thin;
 overflow-x: hidden;
@@ -113,8 +114,7 @@ const ScoreContainer = styled(Box)`
   left: 50%;
   transform: translate(-50%, -50%);
   border-radius: 8px;
-  /* padding: ; */
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  /* justify-content: space-between; */
 `;
