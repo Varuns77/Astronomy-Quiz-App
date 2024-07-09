@@ -1,4 +1,4 @@
-import { Box, styled } from '@mui/material';
+import { Box } from '@mui/material';
 import React, { useState, useEffect, useContext } from 'react';
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import { GameContext } from '../Context/GameContext';
@@ -22,7 +22,7 @@ const Timer = () => {
       if (remainingTime === 0 && !timerDone) {
         setTimerDone(true); // Prevents this from running again on subsequent renders
         setTimeout(() => {
-          // window.location.reload(); // Reload the page after a short delay
+          window.location.reload(); // Reload the page after a short delay
         }, 1000);
       }
     }, [remainingTime, timerDone]);

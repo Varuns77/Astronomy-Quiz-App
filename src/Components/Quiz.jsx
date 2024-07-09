@@ -1,214 +1,232 @@
-import React, { useEffect, useRef, useState } from "react";
-import styled from "styled-components";
-// import { Button } from "../styled/Button";
+import React, { useContext, useRef, useState } from "react";
 import { data } from "../assets/Data";
-import {MediumData} from "../assets/MediumData"
-import {HardData} from "../assets/HardData"
+import { MediumData } from "../assets/MediumData";
+import { HardData } from "../assets/HardData";
 import Timer from "./Timer";
 import MusicPlayer from "./MusicPlayer";
+import { TextField, Button, Container, Typography, List, ListItem, Divider, Box, ListItemButton, Stack } from '@mui/material';
+import { styled } from '@mui/system';
+import { GameContext } from '../Context/GameContext';
+import { grey } from '@mui/material/colors';
 
-function Quiz({difficulty, homeToggle}) {
+function Quiz() {
+
+  const { selectedDifficulty, homeFn } = useContext(GameContext);
 
   const gameLevels = {
     Easy: data,
     Medium: MediumData,
     Hard: HardData,
   };
-  
-  const Gamelvl = gameLevels[difficulty];
-  // console.log(Gamelvl);
 
-  let [index, setIndex] = useState(0)
-  const [question, setQuestion] = useState(Gamelvl[index])
-  const [lock, setLock] = useState(false)
-  const [score, setScore] = useState(0)
-  let [result, setResult] = useState(false)
-  const [userData, setUserData] = useState([]);
+  const Gamelvl = gameLevels[selectedDifficulty];
 
+  let [index, setIndex] = useState(0);
+  const [question, setQuestion] = useState(Gamelvl[index]);
+  const [lock, setLock] = useState(false);
+  const [score, setScore] = useState(0);
+  const [result, setResult] = useState(false);
+  const [userData, setUserData] = useState({});
 
   const handleNameChange = (event) => {
-
     const newName = event.target.value;
     const newScore = score;
-    const newDifficulty = difficulty;
+    const newDifficulty = selectedDifficulty;
 
-
-    setUserData(prevUserData => ({
-      ...prevUserData,
+    setUserData({
       name: newName,
       userscore: newScore,
-      difficultylevel: newDifficulty
-    }));
+      difficultylevel: newDifficulty,
+    });
   };
 
-  const handleSaveScore = () => {
-    // Save user data to localStorage
-    const randomId = Math.random().toString(36).substring(2,10);
-
-    localStorage.setItem(randomId, JSON.stringify(userData));
-    alert('Score saved successfully!');
+  const handleSaveScore = (event) => {
+    if(event.target.value == ""){
+      alert('Please enter your name');
+    }
+    else{
+      const randomId = Math.random().toString(36).substring(2, 10);
+      localStorage.setItem(randomId, JSON.stringify(userData));
+      alert('Score saved successfully!');
+    }
   };
 
-  console.log(score);
+  let Option1 = useRef(null);
+  let Option2 = useRef(null);
+  let Option3 = useRef(null);
+  let Option4 = useRef(null);
 
-  let Option1 = useRef(null)
-  let Option2 = useRef(null)
-  let Option3 = useRef(null)
-  let Option4 = useRef(null)
+  const opt_arr = [Option1, Option2, Option3, Option4];
 
-  //using this array, we will highlight the correct option when we click on the wrong ans
-  const opt_arr = [Option1,Option2,Option3, Option4];
-
-  // console.log(opt_arr)
-
-  // console.log(difficulty);
-
-  
-
-  const checkAns= (e, ans) => {
-    if(lock === false){
-      if(question.ans === ans){
-        e.target.classList.add("correct")
-        setLock(true)
-        if(difficulty === 'Easy')
-          setScore(prev=> prev + 3);
-        else if(difficulty === 'Medium'){
-          setScore(prev=> prev + 5);
-        }
-        else{
-          setScore(prev=> prev + 10);
-        }
-      }
-      else{
-        e.target.classList.add("wrong")
-        if(difficulty === 'Easy')
-          setScore(prev=> prev - 1);
-        else if(difficulty === 'Medium'){
-          setScore(prev=> prev - 2);
-        }
-        else{
-          setScore(prev=> prev - 4);
-        }
-        setLock(true)
-        opt_arr[question.ans - 1].current.classList.add("correct")
+  const checkAns = (e, ans) => {
+    if (lock === false) {
+      if (question.ans === ans) {
+        e.target.classList.add("correct");
+        setLock(true);
+        if (selectedDifficulty === 'Easy') setScore((prev) => prev + 3);
+        else if (selectedDifficulty === 'Medium') setScore((prev) => prev + 5);
+        else setScore((prev) => prev + 10);
+      } else {
+        e.target.classList.add("wrong");
+        if (selectedDifficulty === 'Easy') setScore((prev) => prev - 1);
+        else if (selectedDifficulty === 'Medium') setScore((prev) => prev - 2);
+        else setScore((prev) => prev - 4);
+        setLock(true);
+        opt_arr[question.ans - 1].current.classList.add("correct");
       }
     }
-  }
-
-  // console.log(question.ans);
+  };
 
   const next = () => {
-    if(lock == true){
-      if(index === Gamelvl.length - 1)
-      {
-        setResult(true)
-        return 0;
+    if (lock === true) {
+      if (index === Gamelvl.length - 1) {
+        setResult(true);
+        return;
       }
-      setIndex(++index)
-      setQuestion(Gamelvl[index])
-      setLock(false)
-      opt_arr.map((option) => {
-        option.current.classList.remove("wrong")
-        option.current.classList.remove("correct")
-        return null
-      })
+      setIndex(++index);
+      setQuestion(Gamelvl[index]);
+      setLock(false);
+      opt_arr.forEach((option) => {
+        option.current.classList.remove("wrong");
+        option.current.classList.remove("correct");
+      });
     }
-  }
+  };
 
   const reset = () => {
-    setIndex(0)
-    setLock(false)
-    setQuestion(Gamelvl[0])
-    setScore(0)
-    setResult(false)
-  }
+    setIndex(0);
+    setLock(false);
+    setQuestion(Gamelvl[0]);
+    setScore(0);
+    setResult(false);
+  };
 
   return (
-   
-    <GamePlayContainer>
-        {result ? <>
-        <div className="result-section">
-        
-        <label>
-        Enter your name:
-        <input
-          type="text"
-          value={userData.name}
-          onChange={handleNameChange}
-        />
-      </label>
-          <p>Difficulty Level: <b>{difficulty}</b></p>
-          <p>You Scored: <b>{score}</b></p>
-          <Button className="reset-btn" onClick={handleSaveScore}>Save your score</Button>
-          <Button className="reset-btn" onClick={reset}>Reset</Button>
-          <Button className="reset-btn" onClick={homeToggle}>Home</Button>
-        </div>
-        
-        </> : <>
-        
-      <Timer difficultLvl={difficulty}/>
-      <div className="top-section">
-        <div className="ques-section">
-          <p>Questions</p>
-          <p>{index+1}/{Gamelvl.length}</p>
-        </div>
-        <div className="score-section">
-          <p>Score</p>
-          <p>{score}</p>
-        </div>
-      </div>
-      <div className="ques-ans-section">
-        <hr />
-        <p>{question.ques}</p>
-        <ul>
-          <li ref={Option1} onClick={(e) => {checkAns(e,1)}}>{question.option1}</li>
-          <li ref={Option2} onClick={(e) => {checkAns(e,2)}}>{question.option2}</li>
-          <li ref={Option3} onClick={(e) => {checkAns(e,3)}}>{question.option3}</li>
-          <li ref={Option4} onClick={(e) => {checkAns(e,4)}}>{question.option4}</li>
-        </ul>
-        <Button className="next-btn" onClick={next}>Next</Button>
-      </div>  </>}      
+    <Container maxWidth="md" sx={{ bgcolor: 'background.paper', borderRadius: 2, p: 3, mt: 7}}>
+      {result ? (
+        <ResultSection>
+          <Typography variant="h1" sx={{marginTop: "10px", textAlign: "center"}}>
+            GAME OVER
+          </Typography>
+          <Typography variant="h6">Enter your name:</Typography>
+          <TextField
+            variant="filled"
+            size="small"
+            value={userData.name}
+            onChange={handleNameChange}
+            sx={{ mb: 2, width: '50%'}}
+          />
+          
+          <Typography variant="body1">
+            Difficulty Level: <strong style={{color: grey[500]}}>{selectedDifficulty}</strong>
+          </Typography>
+          <Typography variant="body1">
+            You Scored: <strong style={{color: grey[500]}}>{score}</strong>
+          </Typography>
+          <Stack spacing={2} direction="row" m={2}>
+            <CustomBtn variant="contained" color="primary" onClick={handleSaveScore} sx={{ mt: 2 }}>
+              Save score
+            </CustomBtn>
+            <CustomBtn variant="contained" color="secondary" onClick={reset} sx={{ mt: 2, fontFamily: 'Bungee, cursive', fontWeight: '900' }}>
+              PLAY AGAIN
+            </CustomBtn>
+          </Stack>
+          <CustomBtn variant="contained" onClick={homeFn} sx={{ mt: 2 }}>
+            QUIt
+          </CustomBtn>
+        </ResultSection>
+      ) : (
+        <>
+          <TimerWrapper>
+            <Timer difficultLvl={selectedDifficulty} />
+          </TimerWrapper>
+          <TopSection> 
+            <QuesSection>
+              <Typography variant="body1">Questions</Typography>
+              <Typography variant="body1" sx={{color: grey[500]}}>{index + 1}/{Gamelvl.length}</Typography>
+            </QuesSection>
+            <ScoreSection>
+              <Typography variant="body1">Score</Typography>
+              <Typography variant="body1" sx={{color: grey[500]}}>{score}</Typography>
+            </ScoreSection>
+          </TopSection>
+          <QuesAnsSection>
+            <Divider />
+            <Typography variant="h6" align="center" sx={{ my: 2, fontWeight: '700' }}>
+              {question.ques}
+            </Typography>
+            <List sx={{ fontWeight: '500'}}>
+              <ListItem disablePadding>
+                <ListItemButton ref={Option1} onClick={(e) => { checkAns(e, 1); }}>
+                  {question.option1}
+                </ListItemButton>
+              </ListItem>
+              <ListItem disablePadding>
+                <ListItemButton ref={Option2} onClick={(e) => { checkAns(e, 2); }}>
+                  {question.option2}
+                </ListItemButton>
+              </ListItem>
+              <ListItem disablePadding>
+                <ListItemButton ref={Option3} onClick={(e) => { checkAns(e, 3); }}>
+                  {question.option3}
+                </ListItemButton>
+              </ListItem>
+              <ListItem disablePadding>
+                <ListItemButton ref={Option4} onClick={(e) => { checkAns(e, 4); }}>
+                  {question.option4}
+                </ListItemButton>
+              </ListItem>
+            </List>
+            <Box display="flex" justifyContent="center">
+              <CustomBtn onClick={next} sx={{ mt: 2 }}>
+                Next
+              </CustomBtn>
+            </Box>
+          </QuesAnsSection>
+        </>
+      )}
       <MusicPlayer />
-    </GamePlayContainer>
-   
+    </Container>
   );
 }
 
 export default Quiz;
 
-const GamePlayContainer = styled.div`
-  color: black;
-  font-size: 1.5em;
-  width: 800px;
-  background-color: rgba(255, 255, 255, 0.932);
-  min-height: 640px;
-  min-width: 550px;
-  /* border: 1px solid black; */
-  border-radius: 15px;
-  margin: 0 auto;
-  /* word-wrap:break-word; */
-  margin-top: 60px;
+const ResultSection = styled(Box)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+const TopSection = styled(Box)(({theme}) => ({
+  display: 'flex',
+  justifyContent: 'space-around',
+  padding: '10px',
+  // fontWeight: theme.typography.body1.fontWeight
+}))
+  // display: flex;
+  // justify-content: space-around;
+  // padding: 10px;
+  // `;
+
+const QuesSection = styled(Box)(({theme}) => ({
+ 
+   display: 'flex',
+   flexDirection: 'column',
+   alignItems: 'center',
+   fontWeight: theme.typography.body1.fontWeight
+}));
 
 
-  .top-section {
-    display: flex;
-    justify-content: space-around;
-    padding: 10px;
-  }
-  .ques-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+const ScoreSection = styled(Box)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
-  .score-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    /* border: 1px solid black; */
-  }
-
-  .ques-ans-section hr{
+const QuesAnsSection = styled(Box)`
+  hr {
     height: 2px;
     max-width: 70%;
     margin: 0 auto;
@@ -216,74 +234,56 @@ const GamePlayContainer = styled.div`
     background-color: #707070;
   }
 
-  .ques-ans-section p{
-    text-align: center;
-    margin: 20px;
-    font-weight: 700;
-  }
-
-  .ques-ans-section ul li{
-    display: flex;
-    align-items: center;
+  ul li {
+    /* display: flex;
+    align-items: center; */
     max-width: 70%;
-    height: 50px;
-    padding-left: 15px;
+    /* height: 50px; */
+    /* padding-left: 15px; */
     border: 1px solid #686868;
     border-radius: 8px;
-    font-size: 20px;
+    font-size: 17px;
     cursor: pointer;
     margin: 0 auto;
-    margin-bottom: 20px
+    margin-bottom: 10px;
+    overflow: hidden;
   }
 
-  .next-btn{
-    min-width: 120px;
-    color: white;
-    background-color: black;
-    margin: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: 0.4s background ease-in;
-  }
-
-  .next-btn:hover{
-    background-color: grey;
-        border: 1px solid black;
-        color: white;
-  }
-
-  .ques-ans-section .correct{
-    background: #dffff2;
-    border-color: #00d397;
-  }
-
-  .ques-ans-section .wrong{
-    background: #ffebeb;
-    border-color: #ff4a4a;
-  }
-
-  .result-section{
-    height: 550px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  .correct {
+    background: #34faab;
+    /* border-color: #00ffb7; */
     
   }
 
-  .reset-btn{
-    min-width: 120px;
-    margin-top: 20px;
-    background-color: black;
-    color: white;
+  .wrong {
+    background: #fc8c8c;
+    /* border-color: #fd4444; */
   }
+`;
 
-  .timer-wrapper {
+const TimerWrapper = styled(Box)`
   display: flex;
   justify-content: center;
+  padding-top: 12px;
+`;
 
-  padding-top: 15px;
-  }
+const CustomBtn = styled(Button)`
+    color: white;
+    padding: 8px;
+    background-color: black;
+    border-radius:5px;
+    display: block;
+    min-width: 150px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: 0.4s ease-in;
 
+    &:hover {
+        background-color: grey;
+        /* border: 1px solid black; */
+        color: white;
+        border-radius:5px;
+    }
 `;

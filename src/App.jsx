@@ -1,8 +1,6 @@
-import { useContext, useState } from 'react'
-// import './App.css'
+import { useContext } from 'react'
 import Quiz from './Components/Quiz'
 import StartGame from './Components/StartGame'
-import Qui from './Components/Qui';
 import { ThemeProvider } from '@mui/material';
 import theme from './Themes/Theme';
 import { GameProvider } from './Context/GameContext';
@@ -25,7 +23,7 @@ const GameComponent = () => {
 
   return (
     <>
-      {isGameStarted ? <Qui/> : <StartGame />}
+      {isGameStarted ? <Quiz /> : <StartGame />}
     </>
   );
 };
