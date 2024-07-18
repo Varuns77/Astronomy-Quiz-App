@@ -8,9 +8,9 @@ Gameplay:
 3) Aim to score as high as possible.
 
 Time Limits(entire game):
--> Easy: 30 seconds
--> Medium: 45 seconds
--> Hard: 60 seconds
+-> Easy: 50 seconds
+-> Medium: 70 seconds
+-> Hard: 90 seconds
 
 Scoring: 
 1) Score 3 points for every correct answer.
@@ -18,6 +18,7 @@ Scoring:
 3) Score 10 points for every correct answer.
 
 Ending the Game: 
-If the timer runs out, Game ends immediately.
 
-Complete all questions -> Game ends, revealing your final score.
+-> When the timer runs out, the game finishes immediately.
+-> When you finish every question, the game ends and your final score is displayed.
+
