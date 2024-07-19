@@ -8,7 +8,7 @@ import CustomButtonComponent from "./CustomButtonComponent";
 import DifficultyButton, { StyledList, StyledListItem } from "./DifficultyButton";
 
 function StartGame() {
-  const { toggleGamePlay, handleSelectDifficulty } = useContext(GameContext);
+  const { toggleGamePlay, handleSelectDifficulty, selectedDifficulty } = useContext(GameContext);
   
   const [showOptions, setShowOptions] = useState(false);
   const [showScores, setShowScores] = useState(false);
@@ -32,8 +32,14 @@ function StartGame() {
   }
 
   return (
-    <StartGameContainer maxWidth="md">
-      <Typography variant="h2" component="h2" sx={{color: 'white', textAlign: "center" }}>
+    <StartGameContainer maxWidth="xl">
+      {/* <DiffLevelContainer> */}
+        <Typography className="diff-level" variant="h4" component="h2">
+        Difficulty: 
+        {selectedDifficulty ? selectedDifficulty : ' Not Selected'}
+        </Typography>
+      {/* </DiffLevelContainer> */}
+      <Typography variant="h2" sx={{color: 'white', textAlign: "center" }}>
         Astronomy Quiz
       </Typography>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, justifyContent: 'center', alignItems: 'center' }}>
@@ -70,11 +76,30 @@ function StartGame() {
 
 export default StartGame;
 
-const StartGameContainer = styled(Container)`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center; 
-  gap: 40px;
-  height: 100vh
-`;
+const StartGameContainer = styled(Container)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  gap: '40px',
+  height: '100vh',
+  position: 'relative',
+  '& .diff-level': {
+    // color: 'white',
+    position: 'absolute',
+    top: '5%',
+    right: '1%',
+    // additional styles if needed
+  },
+}));
+
+const DiffLevelContainer = styled(Box)(({ theme }) => ({
+  width: '100%',
+  position: 'absolute',
+  top: '0',
+  right: '0',
+  color: 'white',
+  // marginBottom: '20px'
+  // columnGap: '10px'
+  // marginBottom: '20px', // Optional: Add some margin if needed
+}));

@@ -21,7 +21,6 @@ const theme = createTheme({
     body1: {
         fontSize: '20px',
         fontFamily: "'Bungee', cursive, sans-serif",
-        
     },
     h6: {
         fontSize: '22px',
@@ -46,10 +45,11 @@ const theme = createTheme({
       color: grey[700]
   },
 
-    body2: {
+    h4: {
       fontFamily: "'Bungee', cursive, sans-serif",
       fontSize: '16px',
-      color: grey[500]
+      color: grey[500],
+      padding: '0px'
     }
   },
 

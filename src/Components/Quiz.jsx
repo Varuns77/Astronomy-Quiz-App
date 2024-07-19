@@ -21,7 +21,7 @@ function Quiz() {
 
   const Gamelvl = gameLevels[selectedDifficulty];
 
-  let [index, setIndex] = useState(9);
+  let [index, setIndex] = useState(0);
   const [question, setQuestion] = useState(Gamelvl[index]);
   const [lock, setLock] = useState(false);
   const [score, setScore] = useState(0);
