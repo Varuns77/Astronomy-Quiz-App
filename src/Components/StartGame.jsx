@@ -33,12 +33,10 @@ function StartGame() {
 
   return (
     <StartGameContainer maxWidth="xl">
-      {/* <DiffLevelContainer> */}
         <Typography className="diff-level" variant="h4" component="h2">
         Difficulty: 
         {selectedDifficulty ? selectedDifficulty : ' Not Selected'}
         </Typography>
-      {/* </DiffLevelContainer> */}
       <Typography variant="h2" sx={{color: 'white', textAlign: "center" }}>
         Astronomy Quiz
       </Typography>
@@ -89,17 +87,5 @@ const StartGameContainer = styled(Container)(({ theme }) => ({
     position: 'absolute',
     top: '5%',
     right: '1%',
-    // additional styles if needed
   },
-}));
-
-const DiffLevelContainer = styled(Box)(({ theme }) => ({
-  width: '100%',
-  position: 'absolute',
-  top: '0',
-  right: '0',
-  color: 'white',
-  // marginBottom: '20px'
-  // columnGap: '10px'
-  // marginBottom: '20px', // Optional: Add some margin if needed
 }));
